@@ -1,1 +1,1 @@
-# gitprofile_angular
+Playing with the Github API using AngularJS
