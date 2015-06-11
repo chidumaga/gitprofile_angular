@@ -1,0 +1,33 @@
+<!doctype html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+
+<body>
+  <form>
+    <input type="text" id="their_name">
+    <input type="text" id="your_name">
+    <input type="button"
+  </form>
+
+  <div id="link">
+  Click:
+  </div>
+
+  <script>
+  $(document).ready(function(){
+    var their_name = $('input#their_name').val();
+    var your_name = $('input#your_name').val();
+
+    var link = 'www.foaas.com/off/'+their_name+'/'+your_name;
+
+    $('#link').html(<a href=link>)
+  });
+
+  </script>
+
+</body>
+
+</html>
+
+

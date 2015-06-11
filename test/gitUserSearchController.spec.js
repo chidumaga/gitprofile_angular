@@ -2,10 +2,15 @@ describe('GitUserSearchController', function() {
   beforeEach(module('GitUserSearch'));
 
   var ctrl;
+  var httpBackend;
 
   beforeEach(inject(function($controller) {
     ctrl = $controller('GitUserSearchController');
   }));
+
+  beforeEach(inject(function($httpBackend) {
+    httpBackend = $httpBackend
+    }));
 
 
   it('initialises with an empty search result and term', function() {
@@ -15,15 +20,11 @@ describe('GitUserSearchController', function() {
 
   describe('when searching for a user', function() {
 
-    var httpBackend;
-    beforeEach(inject(function($httpBackend) {
-    httpBackend = $httpBackend
-    httpBackend
+    beforeEach(function(){httpBackend
       .expectGET("https://api.github.com/search/users?q=hello")
       .respond(
        { items: items }
-      );
-    }));
+    )});
 
     afterEach(function() {
       httpBackend.verifyNoOutstandingExpectation();
@@ -48,6 +49,26 @@ describe('GitUserSearchController', function() {
       ctrl.doSearch();
       httpBackend.flush();
       expect(ctrl.searchResult.items).toEqual(items);
+    });
+
+  });
+
+  describe('when doing an empty search', function() {
+
+    beforeEach(function(){httpBackend
+      .whenGET("https://api.github.com/search/users?q=")
+      .respond( 422, 'Validation failed')});
+
+
+    afterEach(function() {
+      httpBackend.verifyNoOutstandingExpectation();
+      httpBackend.verifyNoOutstandingRequest();
+    });
+
+    it('does not search an empty text field', function(){
+      ctrl.searchTerm='';
+      ctrl.doSearch();
+      expect(ctrl.searchResult).toBe(undefined);
     });
   });
 
