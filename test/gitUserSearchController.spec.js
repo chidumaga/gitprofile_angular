@@ -53,7 +53,7 @@ describe('GitUserSearchController', function() {
 
     it('displays what the user just searched for', function(){
       ctrl.searchTerm = 'hello';
-      ctrl.doSearch();
+      ctrl.doSearch(); //is this an actual http request or? how is doSearch() connected to httpBackend
       httpBackend.flush();
       expect(ctrl.searched).toEqual("hello");
     });
