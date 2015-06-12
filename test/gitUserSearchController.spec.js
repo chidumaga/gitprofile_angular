@@ -51,6 +51,13 @@ describe('GitUserSearchController', function() {
       expect(ctrl.searchResult.items).toEqual(items);
     });
 
+    it('displays what the user just searched for', function(){
+      ctrl.searchTerm = 'hello';
+      ctrl.doSearch();
+      httpBackend.flush();
+      expect(ctrl.searched).toEqual("hello");
+    });
+
   });
 
   describe('when doing an empty search', function() {
